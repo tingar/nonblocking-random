@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>~/.config/uzbl.experimental/config.html</title>
+<meta name="Generator" content="Vim/7.2">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body bgcolor="#000000" text="#a8a8a8"><font face="monospace">
+<font color="#ffff00">&nbsp;&nbsp;1 </font><font color="#6c6c6c"># example uzbl config.</font><br>
+<font color="#ffff00">&nbsp;&nbsp;2 </font><font color="#6c6c6c"># all settings are optional.&nbsp;&nbsp;you can use uzbl without any config at all (but it won't do much)</font><br>
+<font color="#ffff00">&nbsp;&nbsp;3 </font><br>
+<font color="#ffff00">&nbsp;&nbsp;4 </font><font color="#6c6c6c"># === Shortcuts ==============================================================</font><br>
+<font color="#ffff00">&nbsp;&nbsp;5 </font><br>
+<font color="#ffff00">&nbsp;&nbsp;6 </font><font color="#6c6c6c"># request BIND &lt;keycmd&gt; = &lt;command&gt;</font><br>
+<font color="#ffff00">&nbsp;&nbsp;7 </font>set bind&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = request BIND<br>
+<font color="#ffff00">&nbsp;&nbsp;8 </font><font color="#6c6c6c"># request MODE_CONFIG &lt;mode&gt; &lt;key&gt; = &lt;value</font><br>
+<font color="#ffff00">&nbsp;&nbsp;9 </font>set mode_config&nbsp;&nbsp;&nbsp;&nbsp;= request MODE_CONFIG<br>
+<font color="#ffff00">&nbsp;10 </font><font color="#6c6c6c"># request TOGGLE_MODES &lt;mode1&gt; &lt;mode2&gt; ... &lt;moden&gt;</font><br>
+<font color="#ffff00">&nbsp;11 </font>set toggle_modes&nbsp;&nbsp; = request TOGGLE_MODES<br>
+<font color="#ffff00">&nbsp;12 </font><font color="#6c6c6c"># request ON_EVENT &lt;EVENT_NAME&gt; &lt;command&gt;</font><br>
+<font color="#ffff00">&nbsp;13 </font>set on_event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = request ON_EVENT<br>
+<font color="#ffff00">&nbsp;14 </font><font color="#6c6c6c"># request PROGRESS_CONFIG &lt;key&gt; = &lt;value&gt;</font><br>
+<font color="#ffff00">&nbsp;15 </font>set progress&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = request PROGRESS_CONFIG<br>
+<font color="#ffff00">&nbsp;16 </font><font color="#6c6c6c"># request MODMAP From To</font><br>
+<font color="#ffff00">&nbsp;17 </font>set modmap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = request MODMAP<br>
+<font color="#ffff00">&nbsp;18 </font><br>
+<font color="#ffff00">&nbsp;19 </font>set set_mode&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = set mode =<br>
+<font color="#ffff00">&nbsp;20 </font>set set_status&nbsp;&nbsp;&nbsp;&nbsp; = set status_message =<br>
+<font color="#ffff00">&nbsp;21 </font>set shell_cmd&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= sh -c<br>
+<font color="#ffff00">&nbsp;22 </font><br>
+<font color="#ffff00">&nbsp;23 </font><font color="#6c6c6c"># Spawn path shortcuts. In spawn the first dir+path match is used in &quot;dir1:dir2:dir3:executable&quot;</font><br>
+<font color="#ffff00">&nbsp;24 </font>set scripts_dir&nbsp;&nbsp;&nbsp;&nbsp;= $XDG_DATA_HOME/uzbl:/usr/local/share/uzbl/examples/data/uzbl:scripts<br>
+<font color="#ffff00">&nbsp;25 </font><br>
+<font color="#ffff00">&nbsp;26 </font><br>
+<font color="#ffff00">&nbsp;27 </font><font color="#6c6c6c"># === Handlers ===============================================================</font><br>
+<font color="#ffff00">&nbsp;28 </font><br>
+<font color="#ffff00">&nbsp;29 </font>set download_handler&nbsp;&nbsp; = spawn @scripts_dir/download.sh<br>
+<font color="#ffff00">&nbsp;30 </font>set cookie_handler&nbsp;&nbsp;&nbsp;&nbsp; = talk_to_socket $XDG_CACHE_HOME/uzbl/cookie_daemon_socket<br>
+<font color="#ffff00">&nbsp;31 </font>set scheme_handler&nbsp;&nbsp;&nbsp;&nbsp; = sync_spawn @scripts_dir/scheme.py<br>
+<font color="#ffff00">&nbsp;32 </font><br>
+<font color="#ffff00">&nbsp;33 </font><font color="#6c6c6c"># New window handler options</font><br>
+<font color="#ffff00">&nbsp;34 </font><font color="#6c6c6c">#set new_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= sh 'echo uri &quot;$8&quot; &gt; $4' # open in same window</font><br>
+<font color="#ffff00">&nbsp;35 </font>set new_window&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">'uzbl-browser -u $8'</font>&nbsp;<font color="#6c6c6c"># equivalent to the default behaviour</font><br>
+<font color="#ffff00">&nbsp;36 </font><br>
+<font color="#ffff00">&nbsp;37 </font><font color="#6c6c6c"># Load start handlers</font><br>
+<font color="#ffff00">&nbsp;38 </font>@on_event&nbsp;&nbsp; LOAD_START&nbsp;&nbsp;&nbsp;&nbsp; @set_status &lt;span foreground=<font color="#ff6060">&quot;khaki&quot;</font>&gt;wait&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;39 </font><br>
+<font color="#ffff00">&nbsp;40 </font><font color="#6c6c6c"># Load commit handler</font><br>
+<font color="#ffff00">&nbsp;41 </font>@on_event&nbsp;&nbsp; LOAD_COMMIT&nbsp;&nbsp;&nbsp;&nbsp;@set_status &lt;span foreground=<font color="#ff6060">&quot;green&quot;</font>&gt;recv&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;42 </font><br>
+<font color="#ffff00">&nbsp;43 </font><font color="#6c6c6c"># Load finish handlers</font><br>
+<font color="#ffff00">&nbsp;44 </font>@on_event&nbsp;&nbsp; LOAD_FINISH&nbsp;&nbsp;&nbsp;&nbsp;@set_status &lt;span foreground=<font color="#ff6060">&quot;gold&quot;</font>&gt;done&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;45 </font>@on_event&nbsp;&nbsp; LOAD_FINISH&nbsp;&nbsp;&nbsp;&nbsp;spawn @scripts_dir/history.sh<br>
+<font color="#ffff00">&nbsp;46 </font><br>
+<font color="#ffff00">&nbsp;47 </font><font color="#6c6c6c"># Generate a FORM_ACTIVE event if an editable</font><br>
+<font color="#ffff00">&nbsp;48 </font><font color="#6c6c6c"># element on the loaded site has initial focus</font><br>
+<font color="#ffff00">&nbsp;49 </font>@on_event&nbsp;&nbsp; LOAD_FINISH&nbsp;&nbsp;&nbsp;&nbsp;js if(document.activeElement.type == <font color="#ff6060">'text'</font>) {Uzbl.run(<font color="#ff6060">&quot;event FORM_ACTIVE&quot;</font>);}<br>
+<font color="#ffff00">&nbsp;50 </font><br>
+<font color="#ffff00">&nbsp;51 </font><font color="#6c6c6c"># Switch to insert mode if a (editable) html form is clicked</font><br>
+<font color="#ffff00">&nbsp;52 </font>@on_event&nbsp;&nbsp; FORM_ACTIVE&nbsp;&nbsp;&nbsp;&nbsp;@set_mode insert<br>
+<font color="#ffff00">&nbsp;53 </font><font color="#6c6c6c"># Switch to command mode if anything else is clicked</font><br>
+<font color="#ffff00">&nbsp;54 </font>@on_event&nbsp;&nbsp; ROOT_ACTIVE&nbsp;&nbsp;&nbsp;&nbsp;@set_mode command<br>
+<font color="#ffff00">&nbsp;55 </font><br>
+<font color="#ffff00">&nbsp;56 </font><font color="#6c6c6c"># Misc on_event handlers</font><br>
+<font color="#ffff00">&nbsp;57 </font><font color="#6c6c6c">#@on_event&nbsp;&nbsp;CONFIG_CHANGED print Config changed: %1 = %2</font><br>
+<font color="#ffff00">&nbsp;58 </font><br>
+<font color="#ffff00">&nbsp;59 </font><br>
+<font color="#ffff00">&nbsp;60 </font><font color="#6c6c6c"># === Behaviour and appearance ===============================================</font><br>
+<font color="#ffff00">&nbsp;61 </font><br>
+<font color="#ffff00">&nbsp;62 </font>set show_status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1<br>
+<font color="#ffff00">&nbsp;63 </font>set status_top&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 0<br>
+<font color="#ffff00">&nbsp;64 </font>set status_background = <font color="#6c6c6c">#808080</font><br>
+<font color="#ffff00">&nbsp;65 </font><br>
+<font color="#ffff00">&nbsp;66 </font>set modcmd_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground=<font color="#ff6060">&quot;blue&quot;</font><br>
+<font color="#ffff00">&nbsp;67 </font>set keycmd_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground=<font color="#ff6060">&quot;blue&quot;</font><br>
+<font color="#ffff00">&nbsp;68 </font>set prompt_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground=<font color="#ff6060">&quot;grey&quot;</font><br>
+<font color="#ffff00">&nbsp;69 </font>set cursor_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= underline=<font color="#ff6060">&quot;single&quot;</font><br>
+<font color="#ffff00">&nbsp;70 </font><br>
+<font color="#ffff00">&nbsp;71 </font>set mode_section&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &lt;span background=<font color="#ff6060">&quot;khaki&quot;</font>&nbsp;foreground=<font color="#ff6060">&quot;black&quot;</font>&gt;[\@[\@mode_indicator]\@]&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;72 </font>set keycmd_section&nbsp;&nbsp;&nbsp;&nbsp;= [&lt;span \@prompt_style&gt;\@[\@keycmd_prompt]\@&lt;/span&gt;&lt;span \@modcmd_style&gt;\@modcmd&lt;/span&gt;&lt;span \@keycmd_style&gt;\@keycmd&lt;/span&gt;]<br>
+<font color="#ffff00">&nbsp;73 </font>set progress_section&nbsp;&nbsp;= &lt;span foreground=<font color="#ff6060">&quot;#606060&quot;</font>&gt;\@[\@progress_format]\@&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;74 </font>set uri_section&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = &lt;span foreground=<font color="#ff6060">&quot;#99FF66&quot;</font>&gt;\@[\@uri]\@&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;75 </font>set name_section&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= &lt;span foreground=<font color="#ff6060">&quot;khaki&quot;</font>&gt;\@[\@NAME]\@&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;76 </font>set status_section&nbsp;&nbsp;&nbsp;&nbsp;= &lt;span foreground=<font color="#ff6060">&quot;orange&quot;</font>&gt;\@status_message&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;77 </font>set selected_section&nbsp;&nbsp;= &lt;span foreground=<font color="#ff6060">&quot;#606060&quot;</font>&gt;\@[\@SELECTED_URI]\@&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;78 </font><br>
+<font color="#ffff00">&nbsp;79 </font>set status_format&nbsp;&nbsp;&nbsp;&nbsp; = &lt;span font_family=<font color="#ff6060">&quot;monospace&quot;</font>&gt;@mode_section @keycmd_section @progress_section @uri_section @name_section @status_section @selected_section&lt;/span&gt;<br>
+<font color="#ffff00">&nbsp;80 </font><br>
+<font color="#ffff00">&nbsp;81 </font><font color="#6c6c6c"># Progress bar config</font><br>
+<font color="#ffff00">&nbsp;82 </font>@progress width&nbsp;&nbsp;&nbsp;&nbsp;= 8<br>
+<font color="#ffff00">&nbsp;83 </font><font color="#6c6c6c"># %d = done, %p = pending %c = percent done, %i = int done, %s = spinner,</font><br>
+<font color="#ffff00">&nbsp;84 </font><font color="#6c6c6c"># %t = percent pending, %o = int pending, %r = sprite scroll</font><br>
+<font color="#ffff00">&nbsp;85 </font>@progress format&nbsp;&nbsp; = [%d&gt;%p]%c<br>
+<font color="#ffff00">&nbsp;86 </font>@progress done&nbsp;&nbsp;&nbsp;&nbsp; = =<br>
+<font color="#ffff00">&nbsp;87 </font>@progress pending&nbsp;&nbsp;=<br>
+<font color="#ffff00">&nbsp;88 </font><br>
+<font color="#ffff00">&nbsp;89 </font><font color="#6c6c6c"># Or ride those spinnas'</font><br>
+<font color="#ffff00">&nbsp;90 </font><font color="#6c6c6c">#@progress format&nbsp;&nbsp; = [%d%s%p]</font><br>
+<font color="#ffff00">&nbsp;91 </font><font color="#6c6c6c">#@progress spinner&nbsp;&nbsp;= -\\|/</font><br>
+<font color="#ffff00">&nbsp;92 </font><font color="#6c6c6c">#@progress done&nbsp;&nbsp;&nbsp;&nbsp; = -</font><br>
+<font color="#ffff00">&nbsp;93 </font><font color="#6c6c6c">#@progress pending&nbsp;&nbsp;=</font><br>
+<font color="#ffff00">&nbsp;94 </font><br>
+<font color="#ffff00">&nbsp;95 </font><br>
+<font color="#ffff00">&nbsp;96 </font><font color="#6c6c6c"># === Core settings ==========================================================</font><br>
+<font color="#ffff00">&nbsp;97 </font><br>
+<font color="#ffff00">&nbsp;98 </font>set useragent&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = Uzbl (Webkit @WEBKIT_MAJOR.@WEBKIT_MINOR.@WEBKIT_MICRO) (@(uname -o)@ @(uname -m)@ [@ARCH_UZBL]) (Commit @COMMIT)<br>
+<font color="#ffff00">&nbsp;99 </font>set fifo_dir&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= /tmp<br>
+<font color="#ffff00">100 </font>set socket_dir&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= /tmp<br>
+<font color="#ffff00">101 </font><br>
+<font color="#ffff00">102 </font><br>
+<font color="#ffff00">103 </font><font color="#6c6c6c"># === Binding modmaps ========================================================</font><br>
+<font color="#ffff00">104 </font><br>
+<font color="#ffff00">105 </font><font color="#6c6c6c">#modmap from&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to</font><br>
+<font color="#ffff00">106 </font>@modmap Control&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ctrl<br>
+<font color="#ffff00">107 </font>@modmap ISO_Left_Tab&nbsp;&nbsp; Shift-Tab<br>
+<font color="#ffff00">108 </font>@modmap space&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Space<br>
+<font color="#ffff00">109 </font><br>
+<font color="#ffff00">110 </font><br>
+<font color="#ffff00">111 </font><font color="#6c6c6c"># === Keyboard bindings ======================================================</font><br>
+<font color="#ffff00">112 </font><br>
+<font color="#ffff00">113 </font><font color="#6c6c6c"># With this command you can enter in any command at runtime when prefixed with</font><br>
+<font color="#ffff00">114 </font><font color="#6c6c6c"># a colon.</font><br>
+<font color="#ffff00">115 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;:_&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= chain <font color="#ff6060">'%s'</font><br>
+<font color="#ffff00">116 </font><br>
+<font color="#ffff00">117 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;j&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = scroll_vert 20<br>
+<font color="#ffff00">118 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;k&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = scroll_vert -20<br>
+<font color="#ffff00">119 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = scroll_horz -20<br>
+<font color="#ffff00">120 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = scroll_horz 20<br>
+<font color="#ffff00">121 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;gg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= scroll_begin<br>
+<font color="#ffff00">122 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;G&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = scroll_end<br>
+<font color="#ffff00">123 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = back<br>
+<font color="#ffff00">124 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;L&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = forward<br>
+<font color="#ffff00">125 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = stop<br>
+<font color="#ffff00">126 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;r&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = reload<br>
+<font color="#ffff00">127 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;R&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = reload_ign_cache<br>
+<font color="#ffff00">128 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = zoom_in<br>
+<font color="#ffff00">129 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = zoom_out<br>
+<font color="#ffff00">130 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;T&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = toggle_zoom_type<br>
+<font color="#ffff00">131 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 1.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">132 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 2.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">133 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 3.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">134 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 4.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">135 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 5.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">136 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 6.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">137 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 7.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">138 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 8.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">139 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 9.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">140 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo set zoom_level = 10.0 &gt; $4&quot;</font><br>
+<font color="#ffff00">141 </font><font color="#6c6c6c">#@bind&nbsp;&nbsp;&nbsp;&nbsp;t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = toggle_status</font><br>
+<font color="#ffff00">142 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= search %s<br>
+<font color="#ffff00">143 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;?*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= search_reverse %s<br>
+<font color="#ffff00">144 </font><font color="#6c6c6c">#jump to next</font><br>
+<font color="#ffff00">145 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = search<br>
+<font color="#ffff00">146 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = search_reverse<br>
+<font color="#ffff00">147 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;gh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= uri <a href="http://www.google.com">http://www.google.com</a><br>
+<font color="#ffff00">148 </font><font color="#6c6c6c"># shortcut to set variables</font><br>
+<font color="#ffff00">149 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;s _&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = set %s<br>
+<font color="#ffff00">150 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;\wiki _&nbsp;&nbsp; = uri <a href="http://wiki.archlinux.org/index.php/Special:Search?search=%s&amp;go=Go">http://wiki.archlinux.org/index.php/Special:Search?search=%s&amp;go=Go</a><br>
+<font color="#ffff00">151 </font><font color="#6c6c6c"># Enclose the executable in quotes if it has spaces.&nbsp;&nbsp;Any additional parameters you use will</font><br>
+<font color="#ffff00">152 </font><font color="#6c6c6c"># appear AFTER the default parameters</font><br>
+<font color="#ffff00">153 </font><font color="#6c6c6c"># use a script to insert bookmarks. or use the EM/keycmd technique a bit further down</font><br>
+<font color="#ffff00">154 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;m&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = spawn @scripts_dir/insert_bookmark.sh<br>
+<font color="#ffff00">155 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;U&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = spawn @scripts_dir/load_url_from_history.sh<br>
+<font color="#ffff00">156 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = spawn @scripts_dir/load_url_from_bookmarks.sh<br>
+<font color="#ffff00">157 </font><font color="#6c6c6c"># with the sample yank script, you can yank one of the arguments into clipboard/selection</font><br>
+<font color="#ffff00">158 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;yurl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= spawn @scripts_dir/yank.sh 6 primary<br>
+<font color="#ffff00">159 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;ytitle&nbsp;&nbsp;&nbsp;&nbsp;= spawn @scripts_dir/yank.sh 7 clipboard<br>
+<font color="#ffff00">160 </font><font color="#6c6c6c"># does the same as yurl but without needing a script</font><br>
+<font color="#ffff00">161 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">'echo -n $6 | xclip'</font><br>
+<font color="#ffff00">162 </font><font color="#6c6c6c"># go the page from primary selection</font><br>
+<font color="#ffff00">163 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">'echo &quot;uri `xclip -selection primary -o`&quot; &gt; $4'</font><br>
+<font color="#ffff00">164 </font><font color="#6c6c6c"># go to the page in clipboard</font><br>
+<font color="#ffff00">165 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">'echo &quot;uri `xclip -selection clipboard -o`&quot; &gt; $4'</font><br>
+<font color="#ffff00">166 </font><font color="#6c6c6c"># start a new uzbl instance from the page in primary selection</font><br>
+<font color="#ffff00">167 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;<font color="#ff6060">'p&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= sh '</font>exec uzbl --uri $(xclip -o)'<br>
+<font color="#ffff00">168 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;ZZ&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= exit<br>
+<font color="#ffff00">169 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;:q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= exit<br>
+<font color="#ffff00">170 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;Xs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= js alert(<font color="#ff6060">&quot;hi&quot;</font>);<br>
+<font color="#ffff00">171 </font><font color="#6c6c6c"># example showing how to use sh</font><br>
+<font color="#ffff00">172 </font><font color="#6c6c6c"># it sends a command to the fifo, whose path is told via a positional param</font><br>
+<font color="#ffff00">173 </font><font color="#6c6c6c"># if fifo_dir is not set, it'll echo to a file named (null) somewhere &gt;:) remember to delete it</font><br>
+<font color="#ffff00">174 </font><font color="#6c6c6c"># The body of the shell command should be one parameter, so if it has spaces like here,</font><br>
+<font color="#ffff00">175 </font><font color="#6c6c6c"># you must enclose it in quotes.&nbsp;&nbsp;Remember to escape (and double-escape) quotes and backslashes</font><br>
+<font color="#ffff00">176 </font><font color="#6c6c6c"># in the body.&nbsp;&nbsp;Any additional parameters you use will appear AFTER the default parameters (cfg file</font><br>
+<font color="#ffff00">177 </font><font color="#6c6c6c"># path, fifo &amp; socket dirs, etc.)</font><br>
+<font color="#ffff00">178 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;XS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= sh <font color="#ff6060">'echo &quot;js alert (\\&quot;This is sent by the shell via a fifo\\&quot;)&quot; &gt; &quot;$4&quot;'</font><br>
+<font color="#ffff00">179 </font><br>
+<font color="#ffff00">180 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;!dump&nbsp;&nbsp;&nbsp;&nbsp; = sh <font color="#ff6060">&quot;echo dump_config &gt; $4&quot;</font><br>
+<font color="#ffff00">181 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;!reload&nbsp;&nbsp; = sh <font color="#ff6060">&quot;sed '/^# === Post-load misc commands/,$d' $1 &gt; $4&quot;</font><br>
+<font color="#ffff00">182 </font><br>
+<font color="#ffff00">183 </font><font color="#6c6c6c"># this script allows you to configure (per domain) values to fill in form fields (eg login information) and to fill in these values automatically</font><br>
+<font color="#ffff00">184 </font>set formfiller = spawn @scripts_dir/formfiller<br>
+<font color="#ffff00">185 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;za&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.sh<br>
+<font color="#ffff00">186 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;ze&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.sh edit<br>
+<font color="#ffff00">187 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;zn&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.sh new<br>
+<font color="#ffff00">188 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;zl&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.sh load<br>
+<font color="#ffff00">189 </font><br>
+<font color="#ffff00">190 </font><font color="#6c6c6c"># Or the more advanced implementation using perl: (could not get this to run - Dieter)</font><br>
+<font color="#ffff00">191 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;LL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.pl load<br>
+<font color="#ffff00">192 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;LN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.pl new<br>
+<font color="#ffff00">193 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;LE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @{formfiller}.pl edit<br>
+<font color="#ffff00">194 </font><br>
+<font color="#ffff00">195 </font><font color="#6c6c6c"># we ship some javascripts to do keyboard based link hinting/following.&nbsp;&nbsp;(webkit does not have C DOM bindings yet)</font><br>
+<font color="#ffff00">196 </font><font color="#6c6c6c"># this is similar to how it works in vimperator (and konqueror)</font><br>
+<font color="#ffff00">197 </font><font color="#6c6c6c"># </font><span style="background-color: #ffff00"><font color="#000000">TODO</font></span><font color="#6c6c6c">: did we resolve: &quot;no click() event for hyperlinks so no referrer set&quot; ?</font><br>
+<font color="#ffff00">198 </font><font color="#6c6c6c">#hit F to toggle the Hints (now in form of link numbering)</font><br>
+<font color="#ffff00">199 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;f&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = script @scripts_dir/hint.js<br>
+<font color="#ffff00">200 </font><font color="#6c6c6c"># the most stable version:</font><br>
+<font color="#ffff00">201 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;Fl*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = script @scripts_dir/follow_Numbers.js %s<br>
+<font color="#ffff00">202 </font><font color="#6c6c6c"># using strings, not polished yet:</font><br>
+<font color="#ffff00">203 </font>@bind&nbsp;&nbsp;&nbsp;&nbsp;FL*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = script @scripts_dir/follow_Numbers_Strings.js %s<br>
+<font color="#ffff00">204 </font><br>
+<font color="#ffff00">205 </font><br>
+<font color="#ffff00">206 </font><font color="#6c6c6c"># Examples using multi-stage-bindings with text prompts.</font><br>
+<font color="#ffff00">207 </font>@bind o&lt;uri:&gt;_ = uri %s<br>
+<font color="#ffff00">208 </font><br>
+<font color="#ffff00">209 </font><font color="#6c6c6c"># multi-stage binding way to write bookmarks to file from inside uzbl.</font><br>
+<font color="#ffff00">210 </font>@bind &lt;Ctrl&gt;b&lt;tags:&gt;_ = sh <font color="#ff6060">'echo -e &quot;$6 %s&quot; &gt;&gt; $XDG_DATA_HOME/uzbl/bookmarks'</font><br>
+<font color="#ffff00">211 </font><br>
+<font color="#ffff00">212 </font><font color="#6c6c6c"># Multi-stage bindings with blank prompts (similar behaviour to emacs M-c M-s bindings?)</font><br>
+<font color="#ffff00">213 </font>@bind &lt;Ctrl&gt;a&lt;:&gt;&lt;Ctrl&gt;q = exit<br>
+<font color="#ffff00">214 </font>@bind &lt;Ctrl&gt;a&lt;:&gt;&lt;Ctrl&gt;h = uri <a href="http://uzbl.org/">http://uzbl.org/</a><br>
+<font color="#ffff00">215 </font><br>
+<font color="#ffff00">216 </font><font color="#6c6c6c"># Inject handy values into the keycmd.</font><br>
+<font color="#ffff00">217 </font>@bind &lt;Ctrl&gt;su = event INJECT_KEYCMD \@uri<br>
+<font color="#ffff00">218 </font>@bind &lt;Ctrl&gt;st = event INJECT_KEYCMD \@TITLE<br>
+<font color="#ffff00">219 </font><font color="#6c6c6c"># Or append.</font><br>
+<font color="#ffff00">220 </font>@bind &lt;Ctrl&gt;du = event APPEND_KEYCMD \@uri<br>
+<font color="#ffff00">221 </font>@bind &lt;Ctrl&gt;dt = event APPEND_KEYCMD \@TITLE<br>
+<font color="#ffff00">222 </font><br>
+<font color="#ffff00">223 </font><br>
+<font color="#ffff00">224 </font><font color="#6c6c6c"># === command editing configuration ==========================================</font><br>
+<font color="#ffff00">225 </font><br>
+<font color="#ffff00">226 </font><font color="#6c6c6c"># you'll want this at the very least</font><br>
+<font color="#ffff00">227 </font>@bind &lt;Return&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = event KEYCMD_EXEC_CURRENT<br>
+<font color="#ffff00">228 </font>@bind &lt;Escape&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = event @set_mode<br>
+<font color="#ffff00">229 </font><br>
+<font color="#ffff00">230 </font><font color="#6c6c6c"># basic searching</font><br>
+<font color="#ffff00">231 </font>@bind &lt;Home&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = event SET_CURSOR_POS 0<br>
+<font color="#ffff00">232 </font>@bind &lt;End&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= event SET_CURSOR_POS -1<br>
+<font color="#ffff00">233 </font>@bind &lt;Left&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = event SET_CURSOR_POS -<br>
+<font color="#ffff00">234 </font>@bind &lt;Right&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= event SET_CURSOR_POS +<br>
+<font color="#ffff00">235 </font>@bind &lt;BackSpace&gt;&nbsp;&nbsp;&nbsp;&nbsp;= event KEYCMD_BACKSPACE<br>
+<font color="#ffff00">236 </font>@bind &lt;Delete&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = event KEYCMD_DELETE<br>
+<font color="#ffff00">237 </font><br>
+<font color="#ffff00">238 </font><font color="#6c6c6c"># readline-ish bindings</font><br>
+<font color="#ffff00">239 </font>@bind &lt;Ctrl&gt;w&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= event KEYCMD_STRIP_WORD<br>
+<font color="#ffff00">240 </font>@bind &lt;Ctrl&gt;u&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= event SET_KEYCMD<br>
+<font color="#ffff00">241 </font>@bind &lt;Ctrl&gt;a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= event SET_CURSOR_POS 0<br>
+<font color="#ffff00">242 </font>@bind &lt;Ctrl&gt;e&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= event SET_CURSOR_POS -1<br>
+<font color="#ffff00">243 </font><br>
+<font color="#ffff00">244 </font><br>
+<font color="#ffff00">245 </font><font color="#6c6c6c"># === Context menu items =====================================================</font><br>
+<font color="#ffff00">246 </font><br>
+<font color="#ffff00">247 </font><font color="#6c6c6c"># Default context menu</font><br>
+<font color="#ffff00">248 </font>menu_add Google = set uri = <a href="http://google.com">http://google.com</a><br>
+<font color="#ffff00">249 </font>menu_add Go Home = set uri = <a href="http://uzbl.org">http://uzbl.org</a><br>
+<font color="#ffff00">250 </font>menu_separator separator_1<br>
+<font color="#ffff00">251 </font>menu_add Quit uzbl = exit<br>
+<font color="#ffff00">252 </font><br>
+<font color="#ffff00">253 </font><font color="#6c6c6c"># Link context menu</font><br>
+<font color="#ffff00">254 </font>menu_link_add Print Link = print \@SELECTED_URI<br>
+<font color="#ffff00">255 </font><br>
+<font color="#ffff00">256 </font><br>
+<font color="#ffff00">257 </font><font color="#6c6c6c"># === Mode configuration =====================================================</font><br>
+<font color="#ffff00">258 </font><br>
+<font color="#ffff00">259 </font><font color="#6c6c6c"># Define some mode specific uzbl configurations.</font><br>
+<font color="#ffff00">260 </font>set command&nbsp;&nbsp;= @mode_config command<br>
+<font color="#ffff00">261 </font>set insert&nbsp;&nbsp; = @mode_config insert<br>
+<font color="#ffff00">262 </font>set stack&nbsp;&nbsp;&nbsp;&nbsp;= @mode_config stack<br>
+<font color="#ffff00">263 </font><br>
+<font color="#ffff00">264 </font><font color="#6c6c6c"># Command mode config.</font><br>
+<font color="#ffff00">265 </font>@command&nbsp;&nbsp;keycmd_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground=<font color="#ff6060">&quot;blue&quot;</font><br>
+<font color="#ffff00">266 </font>@command&nbsp;&nbsp;status_background&nbsp;&nbsp; = <font color="#6c6c6c">#808080</font><br>
+<font color="#ffff00">267 </font>@command&nbsp;&nbsp;mode_indicator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Cmd<br>
+<font color="#ffff00">268 </font><br>
+<font color="#ffff00">269 </font><font color="#6c6c6c"># Insert mode config.</font><br>
+<font color="#ffff00">270 </font>@insert&nbsp;&nbsp; status_background&nbsp;&nbsp; = <font color="#6c6c6c">#808080</font><br>
+<font color="#ffff00">271 </font>@insert&nbsp;&nbsp; mode_indicator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Ins<br>
+<font color="#ffff00">272 </font><br>
+<font color="#ffff00">273 </font><font color="#6c6c6c"># Multi-stage-binding mode config.</font><br>
+<font color="#ffff00">274 </font>@stack&nbsp;&nbsp;&nbsp;&nbsp;keycmd_events&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = 1<br>
+<font color="#ffff00">275 </font>@stack&nbsp;&nbsp;&nbsp;&nbsp;modcmd_updates&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 1<br>
+<font color="#ffff00">276 </font>@stack&nbsp;&nbsp;&nbsp;&nbsp;keycmd_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground=<font color="#ff6060">&quot;blue&quot;</font><br>
+<font color="#ffff00">277 </font>@stack&nbsp;&nbsp;&nbsp;&nbsp;prompt_style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground=<font color="#ff6060">&quot;#000&quot;</font><br>
+<font color="#ffff00">278 </font>@stack&nbsp;&nbsp;&nbsp;&nbsp;status_background&nbsp;&nbsp; = <font color="#6c6c6c">#808080</font><br>
+<font color="#ffff00">279 </font>@stack&nbsp;&nbsp;&nbsp;&nbsp;mode_indicator&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Bnd<br>
+<font color="#ffff00">280 </font><br>
+<font color="#ffff00">281 </font>set default_mode = command<br>
+<font color="#ffff00">282 </font><br>
+<font color="#ffff00">283 </font><font color="#6c6c6c"># Mode bindings:</font><br>
+<font color="#ffff00">284 </font><font color="#6c6c6c"># Changing mode method via set.</font><br>
+<font color="#ffff00">285 </font>@bind I = @set_mode insert<br>
+<font color="#ffff00">286 </font><br>
+<font color="#ffff00">287 </font><font color="#6c6c6c"># Or toggle between modes by rasing request events.</font><br>
+<font color="#ffff00">288 </font>set toggle_cmd_ins = @toggle_modes command insert<br>
+<font color="#ffff00">289 </font><br>
+<font color="#ffff00">290 </font>@bind i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= @toggle_cmd_ins<br>
+<font color="#ffff00">291 </font>@bind &lt;Ctrl&gt;&lt;i&gt;&nbsp;&nbsp;= @toggle_cmd_ins<br>
+<font color="#ffff00">292 </font><br>
+<font color="#ffff00">293 </font><br>
+<font color="#ffff00">294 </font><font color="#6c6c6c"># === Post-load misc commands&nbsp;&nbsp;===============================================</font><br>
+<font color="#ffff00">295 </font><br>
+<font color="#ffff00">296 </font><font color="#6c6c6c"># &quot;home&quot; page if you will</font><br>
+<font color="#ffff00">297 </font><font color="#6c6c6c">#set uri = www.google.com</font><br>
+<font color="#ffff00">298 </font><br>
+<font color="#ffff00">299 </font><font color="#6c6c6c"># === uzbl-tabbed ============================================================</font><br>
+<font color="#ffff00">300 </font>set show_tablist = 1<br>
+<font color="#ffff00">301 </font>set tablist_top&nbsp;&nbsp;= 0<br>
+<font color="#ffff00">302 </font><br>
+<font color="#ffff00">303 </font>set status_background = <font color="#6c6c6c">#808080</font><br>
+<font color="#ffff00">304 </font>set bind_new_tab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= t<br>
+<font color="#ffff00">305 </font>set bind_close_tab&nbsp;&nbsp;&nbsp;&nbsp;= q<br>
+<font color="#ffff00">306 </font><br>
+<font color="#ffff00">307 </font>set bind_next_tab&nbsp;&nbsp;&nbsp;&nbsp; = &lt;Ctrl&gt;&lt;Tab&gt;<br>
+<font color="#ffff00">308 </font>set bind_prev_tab&nbsp;&nbsp;&nbsp;&nbsp; = &lt;Ctrl&gt;&lt;Shift-Tab&gt;<br>
+<font color="#ffff00">309 </font>set bind_goto_tab&nbsp;&nbsp;&nbsp;&nbsp; = &lt;Ctrl&gt;_<br>
+<font color="#ffff00">310 </font><br>
+<font color="#ffff00">311 </font>set tab_colours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = foreground = <font color="#ff6060">&quot;#ddd&quot;</font>&nbsp;background = <font color="#ff6060">&quot;#808080&quot;</font><br>
+<font color="#ffff00">312 </font>set tab_text_colours&nbsp;&nbsp;&nbsp;&nbsp;= foreground = <font color="#ff6060">&quot;#ddd&quot;</font><br>
+<font color="#ffff00">313 </font>set selected_tab&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground = <font color="#ff6060">&quot;#fff&quot;</font>&nbsp;background = <font color="#ff6060">&quot;#333&quot;</font><br>
+<font color="#ffff00">314 </font>set selected_tab_text&nbsp;&nbsp; = foreground = <font color="#ff6060">&quot;#00ff80&quot;</font><br>
+<font color="#ffff00">315 </font>set https_colours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = foreground = <font color="#ff6060">&quot;#808080&quot;</font>&nbsp;background = <font color="#ff6060">&quot;#808880&quot;</font><br>
+<font color="#ffff00">316 </font>set https_text_colours&nbsp;&nbsp;= foreground = <font color="#ff6060">&quot;#404080&quot;</font><br>
+<font color="#ffff00">317 </font>set selected_https&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= foreground = <font color="#ff6060">&quot;#fff&quot;</font>&nbsp;background = <font color="#ff6060">&quot;#353&quot;</font><br>
+<font color="#ffff00">318 </font>set selected_https_text = foreground = <font color="#ff6060">&quot;#8080ff&quot;</font><br>
+</font></body>
+</html>
